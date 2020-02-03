@@ -9,9 +9,9 @@ body {
 /* Style the header */
 header {
   background-color: #6495ed;
-  padding: 30px;
+  padding: 5px;
   text-align: center;
-  font-size: 35px;
+  font-size: 25px;
   color: white;
 }
 
@@ -32,6 +32,7 @@ article {
   float: left;
   padding: 20px;
   width: 85%;
+  height: 650px;
   background-color: #f1f1f1;
 }
 

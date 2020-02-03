@@ -2,7 +2,8 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   app = express(),
   path = require("path"),
-  routes = require("./routes/routes"),
+  commonRoutes = require("./routes/common"),
+  loginRoutes = require("./routes/login"),
   port = 3000;
 const db = require("./util/database");
 
@@ -19,7 +20,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // "/" is the default value here so we can just use app.use(routes);
 // but in the case you would like to serve routes under a context like /admin you have to use app.use("/admin", routes);
-app.use("/", routes);
+app.use("/", commonRoutes);
+app.use(loginRoutes);
 
 // the __dirname is the current directory of this file
 app.use((req, res, next) => {

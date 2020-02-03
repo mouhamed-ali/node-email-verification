@@ -3,9 +3,8 @@ const express = require("express"),
   path = require("path");
 rootDir = require("../util/path");
 
-// in this route we will serve the index.html file
-router.get("/", (req, res, next) => {
-  return res.sendFile(path.join(rootDir, "views", "index.html"));
+router.get("/login", (req, res, next) => {
+  return res.sendFile(path.join(rootDir, "views", "login.html"));
 });
 
 module.exports = router;
