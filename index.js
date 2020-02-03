@@ -4,6 +4,11 @@ const express = require("express"),
   path = require("path"),
   routes = require("./routes/routes"),
   port = 3000;
+const db = require("./util/database");
+
+db.execute("SELECT * FROM USERS")
+  .then(result => console.log(result))
+  .catch(err => console.log(err));
 
 // check why we are using this middleware here : https://www.npmjs.com/package/body-parser#bodyparserurlencodedoptions
 app.use(bodyParser.urlencoded({ extended: false }));

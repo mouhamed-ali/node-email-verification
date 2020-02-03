@@ -1,0 +1,43 @@
+version: "3.3"
+services:
+  node-app:
+    container_name: node-app
+    build:
+      dockerfile: Dockerfile.dev
+      context: .
+    volumes:
+      - /app/node_modules
+      - .:/app
+    depends_on:
+      - mysql
+
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 33306:3306
+    expose:
+      # Opens port 3306 on the container - it's optional because port is already opened
+      - 3306
+    volumes:
+      #- my-db:/var/lib/mysql
+      # Add the content of the sql-scripts/ directory to your image All scripts in docker-entrypoint-initdb.d are automatically executed during container startup
+      - $PWD/docker/sql:/docker-entrypoint-initdb.d
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+# unfortunately we can't use volume because there is a bug https://github.com/docker-library/mysql/issues/275#issuecomment-292208567
+# This line will be displayed in the logs if you use volumes
+#[Warning] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+#volumes:
+#  my-db:
