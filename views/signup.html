@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/css/login.css" />
   </head>
   <body>
-    <form action="/login" method="post">
+    <form action="/signup" method="post">
       <div class="imgcontainer">
         <img
           src="/images/avatar-png-1-transparent.png"
@@ -30,7 +30,17 @@
           name="password"
           required
         />
-        <button type="submit">Login</button>
+
+        <label for="confirm"><b>Confirm Password</b></label>
+        <input
+          type="password"
+          placeholder="Enter Password"
+          name="confirm"
+          required
+        />
+        <button type="submit" style="background-color: rgb(90, 64, 209);">
+          Sign up
+        </button>
       </div>
     </form>
   </body>

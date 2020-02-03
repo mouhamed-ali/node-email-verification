@@ -4,6 +4,7 @@ const express = require("express"),
   path = require("path"),
   commonRoutes = require("./routes/common"),
   loginRoutes = require("./routes/login"),
+  signupRoutes = require("./routes/signup"),
   port = 3000;
 
 // check why we are using this middleware here : https://www.npmjs.com/package/body-parser#bodyparserurlencodedoptions
@@ -17,6 +18,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // but in the case you would like to serve routes under a context like /admin you have to use app.use("/admin", routes);
 app.use("/", commonRoutes);
 app.use(loginRoutes);
+app.use(signupRoutes);
 
 // the __dirname is the current directory of this file
 app.use((req, res, next) => {
