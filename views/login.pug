@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='/css/login.css')
+    title #{docTitle}
+  body
+    form(action='/login', method='post')
+      .imgcontainer
+        img.avatar(src='/images/avatar-png-1-transparent.png', alt='Avatar')
+      .container
+        label(for='username')
+          b Username
+        input(type='email', placeholder='Enter Username', name='username', required='')
+        label(for='password')
+          b Password
+        input(type='password', placeholder='Enter Password', name='password', required='')
+        button(type='submit') Login

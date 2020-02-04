@@ -7,6 +7,10 @@ const express = require("express"),
   signupRoutes = require("./routes/signup"),
   port = 3000;
 
+// specify the template engine : we will use pug
+app.set("view engine", "pug"); // app.set will sets a key-value object across the app, you can get it with app.get('key')
+app.set("views", "views"); // this optional as our templates dir is already views
+
 // check why we are using this middleware here : https://www.npmjs.com/package/body-parser#bodyparserurlencodedoptions
 app.use(bodyParser.urlencoded({ extended: false }));
 

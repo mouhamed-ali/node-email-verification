@@ -5,7 +5,8 @@ const express = require("express"),
   usersDB = require("../util/users");
 
 router.get("/login", (req, res, next) => {
-  return res.sendFile(path.join(rootDir, "views", "login.html"));
+  // return res.sendFile(path.join(rootDir, "views", "login.html")); This is to use when you are not using a template engine
+  res.render("login", { docTitle: "Login page" }); // as pug is our template engine, .pug will be added automatically
 });
 
 router.post("/login", function(request, response) {
