@@ -14,36 +14,42 @@ router.post("/signup", function(request, response) {
   let password = request.body.password;
   let confirm = request.body.confirm;
   if (confirm !== password) {
-    response
-      .status(400)
-      .send("<h1> Password and confirm password must match <h1>");
+    response.status(400).render("error", {
+      docTitle: "400 page",
+      message: "Password and confirm password must match"
+    });
   }
   if (username && password) {
-    usersDB.getByEmail(username).then(result => {
-      if (result[0].length > 0) {
-        console.log(`${username} already exist the database`);
-        response
-          .status(401)
-          .send(
-            "<h1> User already exist. Choose another email address please. <h1>"
-          );
-      } else {
-        // hash the password
-        bcrypt
-          .hash(password, 12)
-          .then(function(hash) {
-            // Store hash in your password DB.
-            console.log(
-              `creating a new user : ${username} with a hash ${hash}`
-            );
-            return usersDB.createUser(username, hash);
-          })
-          .then(() => response.redirect("/login"));
-      }
-    });
+    usersDB
+      .getByEmail(username)
+      .then(result => {
+        if (result[0].length > 0) {
+          console.log(`${username} already exist the database`);
+          response.status(401).render("error", {
+            docTitle: "401 page",
+            message: "User already exist. Choose another email address please."
+          });
+        } else {
+          // hash the password
+          bcrypt
+            .hash(password, 12)
+            .then(function(hash) {
+              // Store hash in your password DB.
+              console.log(
+                `creating a new user : ${username} with a hash ${hash}`
+              );
+              return usersDB.createUser(username, hash);
+            })
+            .then(() => response.redirect("/login"));
+        }
+      })
+      .catch(err => console.log(err));
   } else {
     console.log("Not authorized");
-    response.status(400).send("<h1> Username and password are required <h1>");
+    response.status(400).render("error", {
+      docTitle: "400 page",
+      message: "Username and password are required "
+    });
   }
 });
 

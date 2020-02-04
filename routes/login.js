@@ -16,9 +16,10 @@ router.post("/login", function(request, response) {
     usersDB.getByEmail(username).then(result => {
       if (result[0].length < 1) {
         console.log(`${username} was not found in the database`);
-        response
-          .status(401)
-          .send("<h1> Username or password  is incorrect <h1>");
+        response.status(401).render("error", {
+          docTitle: "401 page",
+          message: "Username or password  is incorrect"
+        });
       } else {
         console.log(`User number ${result[0][0].ID} has logged in`);
         response.redirect("/");
@@ -26,7 +27,10 @@ router.post("/login", function(request, response) {
     });
   } else {
     console.log("Not authorized");
-    response.status(400).send("<h1> Username and password are required <h1>");
+    response.status(400).render("error", {
+      docTitle: "400 page",
+      message: "Username and password are required "
+    });
   }
 });
 

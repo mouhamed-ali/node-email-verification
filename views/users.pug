@@ -1,6 +1,23 @@
 extends layouts/main-layout.pug
 
+block styles
+  link(rel='stylesheet', href='/css/table.css')
+
 block content
   h1 Users
-  p
-    | users
+  if users.length > 0
+    table
+      tbody
+        tr
+          th ID
+          th EMAIL
+          th CONFIRMED
+          th PASSWORD
+      each user in users
+        tr
+          td #{user.ID}
+          td #{user.EMAIL}
+          td #{user.CONFIRMED}
+          td #{user.PWD}
+  else
+    h1 No users

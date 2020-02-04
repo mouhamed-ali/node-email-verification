@@ -4,8 +4,16 @@ const express = require("express"),
 
 // show all users of the application
 router.get("/users", (req, res, next) => {
-  console.log(usersDB.fetchAll());
-  res.render("users", { docTitle: "Users page", path: "/users" });
+  usersDB
+    .fetchAll()
+    .then(result => {
+      res.render("users", {
+        docTitle: "Users page",
+        path: "/users",
+        users: result[0]
+      });
+    })
+    .catch(err => console.log(err));
 });
 
 module.exports = router;
