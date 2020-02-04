@@ -6,7 +6,6 @@ const fetchAll = () => {
 };
 
 const getByEmail = email => {
-  console.log("getting ID of ", email);
   return db.execute("SELECT ID FROM USERS WHERE EMAIL = ?", [email]);
 };
 

@@ -4,7 +4,8 @@ const express = require("express"),
   rootDir = require("../util/path"),
   usersDB = require("../util/users"),
   bcrypt = require("bcryptjs"),
-  jwt = require("jsonwebtoken");
+  jwt = require("jsonwebtoken"),
+  tokensDB = require("../util/tokens");
 
 router.get("/signup", (req, res, next) => {
   return res.sendFile(path.join(rootDir, "views", "signup.html"));
@@ -52,11 +53,19 @@ router.post("/signup", function(request, response) {
         return usersDB.createUser(userCredentials.userEmail, hash);
       })
       .then(() => {
-        console.log("userEmail : ", userCredentials.userEmail);
         return generateToken(userCredentials.userEmail);
       })
       .then(token => {
         console.log("the generated token is : ", token);
+        userCredentials.token = token;
+        return usersDB.getByEmail(userCredentials.userEmail).then(result => {
+          return tokensDB.addNewLink(
+            result[0][0].ID,
+            userCredentials.token,
+            "ip@dress",
+            "userAgent"
+          );
+        });
       })
       .then(() => response.redirect("/login"))
       .catch(err => console.log(err));
@@ -78,9 +87,7 @@ const generateToken = userEmail => {
   const payload = { user: userEmail };
   const options = { expiresIn: "1d", issuer: "https://your-domain.io" };
   const secret = process.env.JWT_SECRET;
-  console.log("secret : ", secret);
   const token = jwt.sign(payload, secret, options);
-  console.log("token : ", token);
   return token;
 };
 

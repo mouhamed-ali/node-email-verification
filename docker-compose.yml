@@ -25,13 +25,14 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - 33306:3306
+      - 33306:3306 # to use if you want to access the db from you localhost
     expose:
       # Opens port 3306 on the container - it's optional because port is already opened
       - 3306
     volumes:
       #- my-db:/var/lib/mysql
       # Add the content of the sql-scripts/ directory to your image All scripts in docker-entrypoint-initdb.d are automatically executed during container startup
+      # If you bind a volume the script will be executed only the first time so each time you change the scripts you have to prune this volume
       - $PWD/docker/sql:/docker-entrypoint-initdb.d
 
   adminer:

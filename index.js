@@ -6,6 +6,7 @@ const express = require("express"),
   loginRoutes = require("./routes/login"),
   signupRoutes = require("./routes/signup"),
   usersRoutes = require("./routes/users"),
+  confirmRoutes = require("./routes/confirm"),
   port = 3000;
 
 // specify the template engine : we will use pug
@@ -25,6 +26,7 @@ app.use("/", dashboardRoutes);
 app.use(loginRoutes);
 app.use(signupRoutes);
 app.use(usersRoutes);
+app.use(confirmRoutes);
 
 // the __dirname is the current directory of this file
 app.use((req, res, next) => {
