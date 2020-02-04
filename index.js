@@ -2,9 +2,10 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   app = express(),
   path = require("path"),
-  commonRoutes = require("./routes/common"),
+  dashboardRoutes = require("./routes/dashboard"),
   loginRoutes = require("./routes/login"),
   signupRoutes = require("./routes/signup"),
+  usersRoutes = require("./routes/users"),
   port = 3000;
 
 // specify the template engine : we will use pug
@@ -20,9 +21,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // "/" is the default value here so we can just use app.use(routes);
 // but in the case you would like to serve routes under a context like /admin you have to use app.use("/admin", routes);
-app.use("/", commonRoutes);
+app.use("/", dashboardRoutes);
 app.use(loginRoutes);
 app.use(signupRoutes);
+app.use(usersRoutes);
 
 // the __dirname is the current directory of this file
 app.use((req, res, next) => {

@@ -14,9 +14,9 @@ html(lang='en')
           li
             a(href='/', class=(path === '/' ? 'active' : '')) Dashboard
           li
-            a(href='#') Users
+            a(href='/users', class=(path === '/users' ? 'active' : '')) Users
           li
-            a(href='#') Logout
+            a(href='/login') Logout
       article
         block content
     footer
