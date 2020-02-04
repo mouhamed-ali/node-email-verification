@@ -1,0 +1,23 @@
+doctype html
+html(lang='en')
+  head
+    title #{docTitle}
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='/css/main.css')
+  body
+    header
+      h2 Node Email Confirmation App
+    section
+      nav
+        ul
+          li
+            a(href='/', class=(path === '/' ? 'active' : '')) Dashboard
+          li
+            a(href='#') Users
+          li
+            a(href='#') Logout
+      article
+        block content
+    footer
+      p © 2019 Mohamed Ali AMDOUNI
