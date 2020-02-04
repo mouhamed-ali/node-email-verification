@@ -10,6 +10,7 @@ services:
       - .:/app
     environment:
       - JWT_SECRET="y5TvQES8n3SbDBPrMHZuFPZFy"
+      - SENDGRID_API_KEY=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
     ports:
       - 3000:3000
     depends_on:

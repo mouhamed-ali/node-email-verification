@@ -3,6 +3,7 @@ html
   head
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='/css/login.css')
+    link(rel='stylesheet', href='/css/alert.css')
     title #{docTitle}
   body
     form(action='/login', method='post')
@@ -16,3 +17,8 @@ html
           b Password
         input(type='password', placeholder='Enter Password', name='password', required='')
         button(type='submit') Login
+    if showAlert
+      .alert
+        span.closebtn(onclick="this.parentElement.style.display='none';") ×
+        strong Success!
+        |  An email has been sended to you. Check you email account please before logging into this app.    

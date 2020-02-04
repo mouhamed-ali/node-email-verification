@@ -5,7 +5,8 @@ const express = require("express"),
   usersDB = require("../util/users"),
   bcrypt = require("bcryptjs"),
   jwt = require("jsonwebtoken"),
-  tokensDB = require("../util/tokens");
+  tokensDB = require("../util/tokens"),
+  transporter = require("../util/mailTransporter");
 
 router.get("/signup", (req, res, next) => {
   return res.sendFile(path.join(rootDir, "views", "signup.html"));
@@ -67,7 +68,18 @@ router.post("/signup", function(request, response) {
           );
         });
       })
-      .then(() => response.redirect("/login"))
+      .then(() => {
+        return sendConfirmationEmail(
+          userCredentials.userEmail,
+          userCredentials.token
+        );
+      })
+      .then(() =>
+        response.render("login", {
+          docTitle: "Login page | Confirmation",
+          showAlert: true
+        })
+      )
       .catch(err => console.log(err));
   } else {
     console.log("Not authorized");
@@ -89,6 +101,24 @@ const generateToken = userEmail => {
   const secret = process.env.JWT_SECRET;
   const token = jwt.sign(payload, secret, options);
   return token;
+};
+
+const CONFIRM_ENDPOINT = "localhost:3000/confirmation?token=";
+
+/**
+ * this will send the generated token in an email to the user
+ */
+const sendConfirmationEmail = (userEmail, token) => {
+  return transporter.sendMail({
+    to: userEmail,
+    from: "no-reply@node-confirmation-link.com",
+    subject: "Account Verification",
+    html:
+      "<h2> Hello,</h2> <h3> Please verify your account via this link :  </h3><p>" +
+      CONFIRM_ENDPOINT +
+      token +
+      "</p>"
+  });
 };
 
 module.exports = router;
