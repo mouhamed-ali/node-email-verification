@@ -8,6 +8,8 @@ services:
     volumes:
       - /app/node_modules
       - .:/app
+    environment:
+      - JWT_SECRET="y5TvQES8n3SbDBPrMHZuFPZFy"
     ports:
       - 3000:3000
     depends_on:
