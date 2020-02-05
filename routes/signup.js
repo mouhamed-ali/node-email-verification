@@ -60,12 +60,7 @@ router.post("/signup", function(request, response) {
         console.log("the generated token is : ", token);
         userCredentials.token = token;
         return usersDB.getByEmail(userCredentials.userEmail).then(result => {
-          return tokensDB.addNewLink(
-            result[0][0].ID,
-            userCredentials.token,
-            "ip@dress",
-            "userAgent"
-          );
+          return tokensDB.addNewLink(result[0][0].ID, userCredentials.token);
         });
       })
       .then(() => {
@@ -114,7 +109,7 @@ const sendConfirmationEmail = (userEmail, token) => {
     from: "no-reply@node-confirmation-link.com",
     subject: "Account Verification",
     html:
-      "<h2> Hello,</h2> <h3> Please verify your account via this link :  </h3><p>" +
+      "<h2> Hello,</h2> <h3> Please confirm your account via this link :  </h3><p>" +
       CONFIRM_ENDPOINT +
       token +
       "</p>"

@@ -2,6 +2,7 @@ const express = require("express"),
   router = express.Router(),
   path = require("path"),
   rootDir = require("../util/path"),
+  bcrypt = require("bcryptjs"),
   usersDB = require("../util/users");
 
 router.get("/login", (req, res, next) => {
@@ -14,6 +15,7 @@ router.post("/login", function(request, response) {
   let password = request.body.password;
   if (username && password) {
     usersDB.getByEmail(username).then(result => {
+      // NOT FOUND USER
       if (result[0].length < 1) {
         console.log(`${username} was not found in the database`);
         response.status(401).render("error", {
@@ -21,8 +23,26 @@ router.post("/login", function(request, response) {
           message: "Username or password  is incorrect"
         });
       } else {
-        console.log(`User number ${result[0][0].ID} has logged in`);
-        response.redirect("/");
+        // EMAIL NOT YET CONFIRMED
+        if (!result[0][0].CONFIRMED) {
+          response.status(401).render("error", {
+            docTitle: "401 page",
+            message:
+              "Please verify you account before login. A verification email has been sent to you email address."
+          });
+        } else {
+          // COMPARE PASSWORDS
+          bcrypt.compare(password, result[0][0].PWD).then(res => {
+            if (res) {
+              response.redirect("/");
+            } else {
+              response.status(401).render("error", {
+                docTitle: "401 page",
+                message: "Username or password  is incorrect"
+              });
+            }
+          });
+        }
       }
     });
   } else {

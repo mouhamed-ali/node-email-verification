@@ -9,15 +9,23 @@ const getByUserID = userID => {
   return db.execute("SELECT * FROM TOKENS WHERE USER_ID = ?", [userID]);
 };
 
-const addNewLink = (userID, token, ipAddress, userAgent) => {
+const addNewLink = (userID, token) => {
+  return db.execute("INSERT INTO TOKENS SET USER_ID = ?, TOKEN = ?", [
+    userID,
+    token
+  ]);
+};
+
+const updateLink = (emailAddress, ipAddress, userAgent) => {
   return db.execute(
-    "INSERT INTO TOKENS SET USER_ID = ?, TOKEN = ?, IP_ADDRESS = ?, USER_AGENT = ?",
-    [userID, token, ipAddress, userAgent]
+    "UPDATE TOKENS SET IP_ADDRESS = ?, USER_AGENT = ? WHERE USER_ID = ( SELECT ID FROM USERS WHERE EMAIL = ? )",
+    [ipAddress, userAgent, emailAddress]
   );
 };
 
 module.exports = {
   fetchAll: fetchAll,
   getByUserID: getByUserID,
-  addNewLink: addNewLink
+  addNewLink: addNewLink,
+  updateLink: updateLink
 };

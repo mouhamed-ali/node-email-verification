@@ -6,7 +6,7 @@ const fetchAll = () => {
 };
 
 const getByEmail = email => {
-  return db.execute("SELECT ID FROM USERS WHERE EMAIL = ?", [email]);
+  return db.execute("SELECT * FROM USERS WHERE EMAIL = ?", [email]);
 };
 
 const createUser = (username, password) => {
@@ -16,8 +16,15 @@ const createUser = (username, password) => {
   ]);
 };
 
+const confirmAddress = emailAddress => {
+  return db.execute("UPDATE USERS SET CONFIRMED = true WHERE EMAIL = ?", [
+    emailAddress
+  ]);
+};
+
 module.exports = {
   fetchAll: fetchAll,
   getByEmail: getByEmail,
-  createUser: createUser
+  createUser: createUser,
+  confirmAddress: confirmAddress
 };
