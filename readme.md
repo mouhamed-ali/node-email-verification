@@ -21,7 +21,7 @@ To implement this solution we have used these technologies :
 - [nodemon](https://www.npmjs.com/package/nodemon) - This is a node dev module. It will automatically restart the node application when file changes
 - [docker](https://www.docker.com/) - As we will not install mysql on ou local machines. We'll use docker to create a dev environment for our app
 
-To have at our database structure, check the `schema.sql` script under the `docker/sql` directory. This script will be executed the first time we run our docker environment.
+To have a look at our database structure, check the `schema.sql` script under the `docker/sql` directory. This script will be executed the first time we run our docker environment.
 
 ## Development prerequisites
 
@@ -35,33 +35,19 @@ In order to run this application as a container you'll need docker installed.
 - [OS X](https://docs.docker.com/mac/started/)
 - [Linux](https://docs.docker.com/linux/started/)
 
-### Node
-
-You need to install node in your environment to build and run the application.
-
-[Node](https://nodejs.org/en/) is really easy to install & now include [NPM](https://npmjs.org/).
-You should be able to run the following command after the installation procedure
-below.
-
-    $ node --version
-    v0.10.24
-
-    $ npm --version
-    1.3.21
-
 ### SendGrid
 
-You need to create a send grid account to send emails to users of the app. You can create a free account from here :
+In order to send email to users, you have to create a send grid account (if you don't have one). To create a free account, check this :
 
 - https://signup.sendgrid.com/
 
-Then you have to create a new api key to be used after in the app. Check this link to create a new one :
+Then you have to create a new api key to be used in the app. Check this link to create a new one :
 
 - https://sendgrid.com/docs/ui/account-and-settings/api-keys/#creating-an-api-key
 
 When creating this api key, choose Full Access as permission.
 
-After generating it, use it to replace the environment variable named `SENDGRID_API_KEY` in the `docker-compose-yml` file and don't share is on the net of course.
+After generating it, use it to replace the environment variable named `SENDGRID_API_KEY` in the `docker-compose-yml` file and don't share it on the net of course.
 
 ## Install
 
@@ -173,6 +159,8 @@ Now we can access the app via the login page :
 - [http://localhost:3000/login](http://localhost:3000/login)
 
 ![dashboard](https://user-images.githubusercontent.com/16627692/73836400-74d44880-480f-11ea-883f-c799c5006cfb.png)
+
+`PN` : If you will make examples on the net using this code, make sure to not commit your send grid api key or just delete it when you finish.
 
 ## Authors
 
